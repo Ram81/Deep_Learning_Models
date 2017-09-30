@@ -12,6 +12,7 @@ from __future__ import print_function
 from __future__ import absolute_import
 
 import numpy as np
+import json
 from keras import backend as K
 from keras.layers import Input, Dense
 from keras.models import Model
@@ -132,6 +133,12 @@ def MusicTaggerCRNN(weights='msd', input_tensor=None,
 
     # Create model
     model = Model(melgram_input, x)
+    
+    with open("Music_Tagger.json","w") as model_json:
+    	jsonObj = model.to_json()
+    	parsed = json.dumps(json.loads(jsonObj), indent=4)    	
+    	model_json.write(parsed)
+    	
     if weights is None:
         return model
     else:
