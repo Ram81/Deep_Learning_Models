@@ -1,5 +1,6 @@
 # Load Larger LSTM network and generate text
 import sys
+import json
 import numpy
 from keras.models import Sequential
 from keras.layers import Dense
@@ -38,13 +39,26 @@ X = X / float(n_vocab)
 # one hot encode the output variable
 y = np_utils.to_categorical(dataY)
 # define the LSTM model
+print(X.shape[1],X.shape[2],X.shape[0])
+print(y.shape[1],y.shape[0])
+
 model = Sequential()
-model.add(LSTM(256, input_shape=(X.shape[1], X.shape[2]), return_sequences=True))
+model.add(LSTM(256, input_shape=(X.shape[1],X.shape[2]), return_sequences=True))
 model.add(Dropout(0.2))
 model.add(LSTM(256))
 model.add(Dropout(0.2))
 model.add(Dense(y.shape[1], activation='softmax'))
+
+for l in model.layers:
+    print(l.input_shape,l.output_shape)
+
+with open("Demo.json","w") as model_json:
+    	jsonObj = model.to_json()
+    	parsed = json.dumps(json.loads(jsonObj), indent=4)    	
+    	model_json.write(parsed)
+
 # load the network weights
+'''
 filename = "weights-improvement-47-1.2219-bigger.hdf5"
 model.load_weights(filename)
 model.compile(loss='categorical_crossentropy', optimizer='adam')
@@ -63,5 +77,5 @@ for i in range(1000):
 	seq_in = [int_to_char[value] for value in pattern]
 	sys.stdout.write(result)
 	pattern.append(index)
-	pattern = pattern[1:len(pattern)]
+	pattern = pattern[1:len(pattern)]'''
 print "\nDone."
