@@ -23,11 +23,11 @@
                     "class_name": "Zeros", 
                     "config": {}
                 }, 
-                "units": 500, 
+                "units": 256, 
                 "batch_input_shape": [
                     null, 
-                    null, 
-                    88
+                    100, 
+                    1
                 ], 
                 "dropout": 0.0, 
                 "recurrent_dropout": 0.0, 
@@ -56,6 +56,14 @@
             }
         }, 
         {
+            "class_name": "Dropout", 
+            "config": {
+                "rate": 0.2, 
+                "trainable": true, 
+                "name": "dropout_1"
+            }
+        }, 
+        {
             "class_name": "LSTM", 
             "config": {
                 "recurrent_activation": "hard_sigmoid", 
@@ -75,7 +83,7 @@
                     "class_name": "Zeros", 
                     "config": {}
                 }, 
-                "units": 500, 
+                "units": 256, 
                 "unit_forget_bias": true, 
                 "dropout": 0.0, 
                 "recurrent_dropout": 0.0, 
@@ -98,8 +106,16 @@
                 "go_backwards": false, 
                 "implementation": 0, 
                 "kernel_regularizer": null, 
-                "return_sequences": true, 
+                "return_sequences": false, 
                 "recurrent_constraint": null
+            }
+        }, 
+        {
+            "class_name": "Dropout", 
+            "config": {
+                "rate": 0.2, 
+                "trainable": true, 
+                "name": "dropout_2"
             }
         }, 
         {
@@ -118,24 +134,16 @@
                 "kernel_constraint": null, 
                 "bias_regularizer": null, 
                 "bias_constraint": null, 
-                "activation": "linear", 
+                "activation": "softmax", 
                 "trainable": true, 
                 "kernel_regularizer": null, 
                 "bias_initializer": {
                     "class_name": "Zeros", 
                     "config": {}
                 }, 
-                "units": 88, 
+                "units": 62, 
                 "use_bias": true, 
                 "activity_regularizer": null
-            }
-        }, 
-        {
-            "class_name": "Activation", 
-            "config": {
-                "activation": "softmax", 
-                "trainable": true, 
-                "name": "activation_1"
             }
         }
     ], 
