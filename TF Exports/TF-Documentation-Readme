@@ -1,0 +1,2 @@
+Use this to fetch registerd attributes from any layer
+https://github.com/tensorflow/tensorflow/blob/86f5ab7474825da756838b34e1b4eac93f5fc68a/tensorflow/core/ops/nn_ops.cc#L548
