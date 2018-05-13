@@ -1,0 +1,239 @@
+{
+    "Placeholder": {
+        "connection": {
+            "input": [], 
+            "output": [
+                "conv1"
+            ]
+        }, 
+        "info": {
+            "phase": null, 
+            "type": "Input"
+        }, 
+        "params": {
+            "dim": "-1, 28, 28, 1"
+        }
+    }, 
+    "Placeholder_1": {
+        "connection": {
+            "input": [], 
+            "output": []
+        }, 
+        "info": {
+            "phase": null, 
+            "type": "Input"
+        }, 
+        "params": {
+            "dim": "-1, 28, 28, 1"
+        }
+    }, 
+    "conv1": {
+        "connection": {
+            "input": [
+                "Placeholder"
+            ], 
+            "output": [
+                "pool1"
+            ]
+        }, 
+        "info": {
+            "phase": null, 
+            "type": "Convolution"
+        }, 
+        "params": {
+            "kernel_h": 3, 
+            "kernel_w": 3, 
+            "layer_type": "2D", 
+            "num_output": 32, 
+            "pad_h": 1, 
+            "pad_w": 1, 
+            "stride_h": 1, 
+            "stride_w": 1
+        }
+    }, 
+    "conv2": {
+        "connection": {
+            "input": [
+                "pool1"
+            ], 
+            "output": [
+                "encoding"
+            ]
+        }, 
+        "info": {
+            "phase": null, 
+            "type": "Convolution"
+        }, 
+        "params": {
+            "kernel_h": 3, 
+            "kernel_w": 3, 
+            "layer_type": "2D", 
+            "num_output": 32, 
+            "pad_h": 1, 
+            "pad_w": 1, 
+            "stride_h": 1, 
+            "stride_w": 1
+        }
+    }, 
+    "conv3": {
+        "connection": {
+            "input": [
+                "encoding"
+            ], 
+            "output": [
+                "upsample1"
+            ]
+        }, 
+        "info": {
+            "phase": null, 
+            "type": "Convolution"
+        }, 
+        "params": {
+            "kernel_h": 3, 
+            "kernel_w": 3, 
+            "layer_type": "2D", 
+            "num_output": 32, 
+            "pad_h": 1, 
+            "pad_w": 1, 
+            "stride_h": 1, 
+            "stride_w": 1
+        }
+    }, 
+    "encoding": {
+        "connection": {
+            "input": [
+                "conv2"
+            ], 
+            "output": [
+                "conv3"
+            ]
+        }, 
+        "info": {
+            "phase": null, 
+            "type": "Pooling"
+        }, 
+        "params": {
+            "kernel_h": 2, 
+            "kernel_w": 2, 
+            "layer_type": "2D", 
+            "pad_h": 0, 
+            "pad_w": 0, 
+            "pool": 0, 
+            "stride_h": 2, 
+            "stride_w": 2
+        }
+    }, 
+    "logits": {
+        "connection": {
+            "input": [
+                "upsample2"
+            ], 
+            "output": [
+                "recon"
+            ]
+        }, 
+        "info": {
+            "phase": null, 
+            "type": "Convolution"
+        }, 
+        "params": {
+            "kernel_h": 3, 
+            "kernel_w": 3, 
+            "layer_type": "2D", 
+            "num_output": 1, 
+            "pad_h": 1, 
+            "pad_w": 1, 
+            "stride_h": 1, 
+            "stride_w": 1
+        }
+    }, 
+    "pool1": {
+        "connection": {
+            "input": [
+                "conv1"
+            ], 
+            "output": [
+                "conv2"
+            ]
+        }, 
+        "info": {
+            "phase": null, 
+            "type": "Pooling"
+        }, 
+        "params": {
+            "kernel_h": 2, 
+            "kernel_w": 2, 
+            "layer_type": "2D", 
+            "pad_h": 0, 
+            "pad_w": 0, 
+            "pool": 0, 
+            "stride_h": 2, 
+            "stride_w": 2
+        }
+    }, 
+    "recon": {
+        "connection": {
+            "input": [
+                "logits"
+            ], 
+            "output": []
+        }, 
+        "info": {
+            "phase": null, 
+            "type": "Sigmoid"
+        }, 
+        "params": {}
+    }, 
+    "upsample1": {
+        "connection": {
+            "input": [
+                "conv3"
+            ], 
+            "output": [
+                "upsample2"
+            ]
+        }, 
+        "info": {
+            "phase": null, 
+            "type": "Deconvolution"
+        }, 
+        "params": {
+            "bias_filler": "Zeros", 
+            "kernel_h": 3, 
+            "kernel_w": 3, 
+            "layer_type": "2D", 
+            "num_output": 32, 
+            "pad_h": 11, 
+            "pad_w": 11, 
+            "stride_h": 2, 
+            "stride_w": 2, 
+            "weight_filler": "RandomUniform"
+        }
+    }, 
+    "upsample2": {
+        "connection": {
+            "input": [
+                "upsample1"
+            ], 
+            "output": [
+                "logits"
+            ]
+        }, 
+        "info": {
+            "phase": null, 
+            "type": "Deconvolution"
+        }, 
+        "params": {
+            "bias_filler": "Zeros", 
+            "kernel_h": 3, 
+            "kernel_w": 3, 
+            "layer_type": "2D", 
+            "num_output": 32, 
+            "pad_h": 21, 
+            "pad_w": 21, 
+            "stride_h": 2, 
+            "stride_w": 2, 
+            "weight_filler": "RandomUniform"
+        }
+    }
+}
